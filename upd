@@ -12,6 +12,7 @@ flatpak
 #fwupd
 brew
 rustup
+go
 swiftly
 pipx
 uv
@@ -64,6 +65,11 @@ fi
 if on rustup && has rustup; then
     rustup update
     record rustup $?
+fi
+
+if on go && has go; then
+    go clean -modcache
+    record go $?
 fi
 
 if on swiftly && has swiftly; then
