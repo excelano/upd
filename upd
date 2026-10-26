@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+# Author: David M. Anderson
+# Built with AI assistance (Claude, Anthropic)
+
+config="${XDG_CONFIG_HOME:-$HOME/.config}/upd/config"
+
+if [ ! -f "$config" ]; then
+    mkdir -p "$(dirname "$config")"
+    cat > "$config" <<'CONFIG'
+apt
+flatpak
+#fwupd
+brew
+rustup
+swiftly
+pipx
+uv
+claude
+CONFIG
+    echo "Created $config"
+fi
+
+completed=()
+failed=()
+
+on() { grep -qx "$1" "$config"; }
+
+has() { command -v "$1" >/dev/null; }
+
+record() {
+    if [ "$2" -eq 0 ]; then
+        completed+=("$1")
+    else
+        failed+=("$1")
+    fi
+}
+
+if on apt && has apt-get; then
+    sudo apt update &&
+    sudo apt full-upgrade -y &&
+    sudo apt autoremove -y
+    record apt $?
+fi
+
+if on flatpak && has flatpak; then
+    flatpak update -y &&
+    flatpak uninstall --unused -y
+    record flatpak $?
+fi
+
+if on fwupd && has fwupdmgr; then
+    fwupdmgr refresh
+    fwupdmgr update
+    record fwupd $?
+fi
+
+if on brew && has brew; then
+    brew update &&
+    brew upgrade &&
+    brew cleanup
+    record brew $?
+fi
+
+if on rustup && has rustup; then
+    rustup update
+    record rustup $?
+fi
+
+if on swiftly && has swiftly; then
+    swiftly self-update &&
+    swiftly update -y
+    record swiftly $?
+fi
+
+if on pipx && has pipx; then
+    pipx upgrade-all
+    record pipx $?
+fi
+
+if on uv && has uv; then
+    uv self update
+    uv tool upgrade --all
+    record uv $?
+fi
+
+if on claude && has claude; then
+    claude update
+    record claude $?
+fi
+
+echo
+echo "Completed: ${completed[*]:-none}"
+echo "Failed:    ${failed[*]:-none}"

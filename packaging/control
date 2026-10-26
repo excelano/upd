@@ -1,0 +1,14 @@
+Package: upd
+Version: 0.1.0
+Architecture: all
+Maintainer: David M. Anderson <david.anderson@excelano.com>
+Depends: sudo
+Section: admin
+Priority: optional
+Homepage: https://github.com/excelano/upd
+Description: Update every package manager on the machine in one command
+ upd runs the update for each package manager and self-updating tool it
+ covers, starting with apt, and skips any that is not installed. Firmware
+ updates through fwupd are off by default. A summary at the end lists
+ which updates completed and which failed. ~/.config/upd/config lists the
+ updates to run and is written on the first run.
