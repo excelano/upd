@@ -1,5 +1,5 @@
 Package: upd
-Version: 0.2.0
+Version: 0.2.1
 Architecture: all
 Maintainer: David M. Anderson <david.anderson@excelano.com>
 Depends: sudo

@@ -84,7 +84,7 @@ if on pipx && has pipx; then
 fi
 
 if on uv && has uv; then
-    uv self update
+    { [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/uv/uv-receipt.json" ] || uv self update; } &&
     uv tool upgrade --all
     record uv $?
 fi
