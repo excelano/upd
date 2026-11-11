@@ -28,9 +28,14 @@ It asks for your sudo password for apt and runs unattended after that.
 Firmware updates are off by default, because fwupd can stop to ask for
 confirmation and a reboot.
 
+upd takes no arguments and has no flags, not even `--help`. Given any
+argument, it prints a one-line usage message to stderr and exits with status 2
+before running anything, so a habitual `upd --help` cannot start an update.
+
 ## Choosing what runs
 
-`~/.config/upd/config` lists the updates upd runs, one name per line. The
+`$XDG_CONFIG_HOME/upd/config` (`~/.config/upd/config` when `XDG_CONFIG_HOME`
+is unset) lists the updates upd runs, one name per line. The
 first run writes it with every update upd knows, and with firmware commented
 out:
 
@@ -46,3 +51,7 @@ turn firmware updates on. A package upgrade never touches the file. When an
 upgrade adds an update upd knows, it stays off until you add its name; the
 names upd recognizes are the ones in a freshly written config, which you get
 by moving yours aside and running upd once.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
