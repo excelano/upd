@@ -2,6 +2,11 @@
 # Author: David M. Anderson
 # Built with AI assistance (Claude, Anthropic)
 
+if [ $# -gt 0 ]; then
+    echo "usage: upd (takes no arguments)" >&2
+    exit 2
+fi
+
 config="${XDG_CONFIG_HOME:-$HOME/.config}/upd/config"
 
 if [ ! -f "$config" ]; then
