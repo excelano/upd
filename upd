@@ -19,6 +19,8 @@ brew
 rustup
 go
 swiftly
+flutter
+android-sdk
 pipx
 uv
 claude
@@ -81,6 +83,17 @@ if on swiftly && has swiftly; then
     swiftly self-update &&
     swiftly update -y
     record swiftly $?
+fi
+
+if on flutter && has flutter; then
+    flutter upgrade
+    record flutter $?
+fi
+
+sdkmanager="${ANDROID_HOME:-$HOME/Android/Sdk}/cmdline-tools/latest/bin/sdkmanager"
+if on android-sdk && [ -x "$sdkmanager" ]; then
+    "$sdkmanager" --update
+    record android-sdk $?
 fi
 
 if on pipx && has pipx; then
